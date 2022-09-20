@@ -185,5 +185,19 @@ public class CardDelivery {
 
     }
 
+    @Test
+    void invalidOneName() {
+        String planningDate = generateDate(3);
+        $x("//*[@placeholder='Город']").setValue("Москва");
+        $x("//*[@data-test-id='date']//self::input").doubleClick().sendKeys(Keys.DELETE + planningDate);
+        $x("//*[@name='name']").setValue("Елена");
+        $x("//*[@name='phone']").setValue("+79998887766");
+        $x("//*[@data-test-id='agreement']").click();
+        $x("//*[@class='button__text']").click();
+        $x("//form").should(Condition.visible, Duration.ofSeconds(15));
+
+        $x("//span[contains(@data-test-id,'name')]/span/span[contains(@class,'input__sub')]").shouldHave(Condition.text("Поле обязательно для заполнения"), Duration.ofSeconds(15)).shouldBe(Condition.visible);
+    }
+
 
 }
