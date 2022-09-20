@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.open;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class CardDelivery {
 
@@ -38,13 +38,9 @@ public class CardDelivery {
         $x("//*[@class='button__text']").click();
         $x("//form").should(Condition.visible, Duration.ofSeconds(15));
 
-        $x("//*[@data-test-id='notification']").should(Condition.visible, Duration.ofSeconds(50));
-        String text = $x("//*[@class='notification__title']").getText();
-        assertEquals("Успешно!", text);
-
+        $x("//*[@class='notification__title']").shouldHave(Condition.text("Успешно!"), Duration.ofSeconds(15)).shouldBe(Condition.visible);
         $x("//div[@class='notification__content']").shouldHave(Condition.text("Встреча успешно забронирована на " + planningDate), Duration.ofSeconds(15)).shouldBe(Condition.visible);
-        String planningDateText = $x("//div[@class='notification__content']").getText();
-        assertEquals("Встреча успешно забронирована на " + planningDate, planningDateText);
+
 
     }
     
@@ -58,8 +54,9 @@ public class CardDelivery {
         $x("//*[@name='phone']").setValue("+79998887766");
         $x("//*[@data-test-id='agreement']").click();
         $x("//*[@class='button__text']").click();
-        String text = $x("//*[@data-test-id='city']").getText();
-        assertEquals("Доставка в выбранный город недоступна", text);
+
+        $x("//*[@data-test-id='city']").shouldHave(Condition.text("Доставка в выбранный город недоступна"), Duration.ofSeconds(15)).shouldBe(Condition.visible);
+
 
     }
 
@@ -72,8 +69,8 @@ public class CardDelivery {
         $x("//*[@name='phone']").setValue("+79998887766");
         $x("//*[@data-test-id='agreement']").click();
         $x("//*[@class='button__text']").click();
-        String text = $x("//*[@data-test-id='city']").getText();
-        assertEquals("Поле обязательно для заполнения", text);
+
+        $x("//*[@data-test-id='city']").shouldHave(Condition.text("Поле обязательно для заполнения"), Duration.ofSeconds(15)).shouldBe(Condition.visible);
 
     }
 
@@ -86,8 +83,8 @@ public class CardDelivery {
         $x("//*[@name='phone']").setValue("+79998887766");
         $x("//*[@data-test-id='agreement']").click();
         $x("//*[@class='button__text']").click();
-        String text = $x("//span[contains(@data-test-id,'date')]//span[@class='input__sub']").getText();
-        assertEquals("Заказ на выбранную дату невозможен", text);
+
+        $x("//span[contains(@data-test-id,'date')]//span[@class='input__sub']").shouldHave(Condition.text("Заказ на выбранную дату невозможен"), Duration.ofSeconds(15)).shouldBe(Condition.visible);
 
     }
 
@@ -103,8 +100,6 @@ public class CardDelivery {
         $x("//form").should(Condition.visible, Duration.ofSeconds(15));
 
         $x("//div[@class='notification__content']").shouldHave(Condition.text("Встреча успешно забронирована на " + planningDate), Duration.ofSeconds(15)).shouldBe(Condition.visible);
-        String planningDateText = $x("//div[@class='notification__content']").getText();
-        assertEquals("Встреча успешно забронирована на " + planningDate, planningDateText);
 
     }
 
@@ -116,8 +111,8 @@ public class CardDelivery {
         $x("//*[@name='phone']").setValue("+79998887766");
         $x("//*[@data-test-id='agreement']").click();
         $x("//*[@class='button__text']").click();
-        String text = $x("//span[contains(@data-test-id,'date')]//span[@class='input__sub']").getText();
-        assertEquals("Неверно введена дата", text);
+
+        $x("//span[contains(@data-test-id,'date')]//span[@class='input__sub']").shouldHave(Condition.text("Неверно введена дата"), Duration.ofSeconds(15)).shouldBe(Condition.visible);
 
     }
 
@@ -130,8 +125,9 @@ public class CardDelivery {
         $x("//*[@name='phone']").setValue("+79998887766");
         $x("//*[@data-test-id='agreement']").click();
         $x("//*[@class='button__text']").click();
-        String text = $x("//span[contains(@data-test-id,'name')]/span/span[contains(@class,'input__sub')]").getText();
-        assertEquals("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.", text);
+
+        $x("//span[contains(@data-test-id,'name')]/span/span[contains(@class,'input__sub')]").shouldHave(Condition.text("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."), Duration.ofSeconds(15)).shouldBe(Condition.visible);
+
     }
 
     @Test
@@ -143,8 +139,9 @@ public class CardDelivery {
         $x("//*[@name='phone']").setValue("+79998887766");
         $x("//*[@data-test-id='agreement']").click();
         $x("//*[@class='button__text']").click();
-        String text = $x("//span[contains(@data-test-id,'name')]/span/span[contains(@class,'input__sub')]").getText();
-        assertEquals("Поле обязательно для заполнения", text);
+
+        $x("//span[contains(@data-test-id,'name')]/span/span[contains(@class,'input__sub')]").shouldHave(Condition.text("Поле обязательно для заполнения"), Duration.ofSeconds(15)).shouldBe(Condition.visible);
+
     }
 
     @Test
@@ -156,8 +153,9 @@ public class CardDelivery {
         $x("//*[@name='phone']").setValue("+7999");
         $x("//*[@data-test-id='agreement']").click();
         $x("//*[@class='button__text']").click();
-        String text = $x("//span[contains(@class,'input_invalid')]/span/span[contains(@class,'input__sub')]").getText();
-        assertEquals("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.", text);
+
+        $x("//span[contains(@class,'input_invalid')]/span/span[contains(@class,'input__sub')]").shouldHave(Condition.text("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."), Duration.ofSeconds(15)).shouldBe(Condition.visible);
+
     }
 
     @Test
@@ -169,8 +167,9 @@ public class CardDelivery {
         $x("//*[@name='phone']").setValue("");
         $x("//*[@data-test-id='agreement']").click();
         $x("//*[@class='button__text']").click();
-        String text = $x("//span[contains(@data-test-id,'phone')]/span/span[@class='input__sub']").getText();
-        assertEquals("Поле обязательно для заполнения", text);
+
+        $x("//span[contains(@data-test-id,'phone')]/span/span[@class='input__sub']").shouldHave(Condition.text("Поле обязательно для заполнения"), Duration.ofSeconds(15)).shouldBe(Condition.visible);
+
     }
 
     @Test
@@ -182,9 +181,7 @@ public class CardDelivery {
         $x("//*[@name='phone']").setValue("+79998887766");
         $x("//*[@class='button__text']").click();
 
-        String text = $x("//label[contains(@class,'input_invalid')]/span[contains(@role,'presentation')]").getText();
-        assertEquals("Я соглашаюсь с условиями обработки и использования моих персональных данных", text);
-
+        $x("//label[contains(@class,'input_invalid')]/span[contains(@role,'presentation')]").shouldHave(Condition.text("Я соглашаюсь с условиями обработки и использования моих персональных данных"), Duration.ofSeconds(15)).shouldBe(Condition.visible);
 
     }
 
